@@ -1,17 +1,13 @@
-﻿using MVC.Project01.BLL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using MVC.Project01.BLL.Interfaces;
 using MVC.Project01.DAL.Data.Contexts;
 using MVC.Project01.DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MVC.Project01.BLL.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        private readonly AppDbContext _context;
+        private protected readonly AppDbContext _context;
         public GenericRepository(AppDbContext context)
         {
             _context = context;
@@ -19,12 +15,19 @@ namespace MVC.Project01.BLL.Repositories
 
         public IEnumerable<T> GetAll()
         {
+            if (typeof(T) == typeof(Employee))
+            {
+                return (IEnumerable<T>) _context.Employees.Include(E => E.WorkFor).ToList();
+            }
+
             return _context.Set<T>().ToList();
 
         }
 
         public T Get(int Id)
         {
+           
+
             return _context.Set<T>().Find(Id);
         }
 

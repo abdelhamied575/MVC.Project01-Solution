@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Employee>
+﻿    @model IEnumerable<EmployeeViewModel>
 
 
 @{
@@ -8,6 +8,36 @@
 <h1>All Employees</h1>
 <br />
 <br />
+
+<form asp-action="Index" class="m-3">
+
+    <div class="row">
+
+        <div class="col-8">
+            <input type="search" id="Search" name="InputSearch" class="form-control" />
+
+        </div>
+
+        <div class="col-4">
+            <input type="submit" value="Search" class="btn btn-success ">
+
+
+        </div>
+
+    </div>
+
+    
+
+</form>
+
+
+@if(!string.IsNullOrEmpty(TempData["Message"] as string))
+{
+    <div class="alert alert-danger">
+        <p>@TempData["Message"]</p>
+    </div>
+}
+
 
 <a asp-controller="Employees" asp-action="Create" class="btn btn-primary">Create Employee</a>
 <br />
@@ -20,6 +50,7 @@
             <tr>
                 <th>@Html.DisplayNameFor(D => D.Name)</th>
                 <th>@Html.DisplayNameFor(D => D.Age)</th>
+                <th>@Html.DisplayNameFor(D => D.WorkFor)</th>
                 <th>@Html.DisplayNameFor(D => D.Address)</th>
                 <th>@Html.DisplayNameFor(D => D.Email)</th>
                 <th>@Html.DisplayNameFor(D => D.Salary)</th>
@@ -47,6 +78,7 @@
 
                     <td> @employee.Name </td>
                     <td> @employee.Age </td>
+                    <td> @employee.WorkFor?.Name </td>
                     <td> @employee.Address </td>
                     <td> @Html.DisplayFor(M=>employee.Email) </td>
                     <td> @Html.DisplayFor(M => employee.Salary)  </td>

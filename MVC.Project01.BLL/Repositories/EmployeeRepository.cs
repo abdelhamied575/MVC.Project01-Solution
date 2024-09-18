@@ -1,4 +1,5 @@
-﻿using MVC.Project01.BLL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using MVC.Project01.BLL.Interfaces;
 using MVC.Project01.DAL.Data.Contexts;
 using MVC.Project01.DAL.Models;
 using System;
@@ -16,6 +17,17 @@ namespace MVC.Project01.BLL.Repositories
         public EmployeeRepository(AppDbContext context):base(context)
         {
         }
+
+        public IEnumerable<Employee> GetByName(string name)
+        {
+            return _context.Employees
+                           .Where(E=>E.Name.ToLower()
+                           .Contains(name.ToLower()))
+                           .Include(E => E.WorkFor)
+                           .ToList();
+
+        }
+
 
 
         //public IEnumerable<Employee> GetAll()
@@ -49,7 +61,7 @@ namespace MVC.Project01.BLL.Repositories
         //    return _context.SaveChanges();
         //}
 
-       
-        
+
+
     }
 }

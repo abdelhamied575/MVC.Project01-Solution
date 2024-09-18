@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using MVC.Project01.Pl.Models;
+using MVC.Project01.Pl.ViewModels;
 using System.Diagnostics;
 
 namespace MVC.Project01.Pl.Controllers
