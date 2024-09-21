@@ -1,5 +1,4 @@
-﻿
-@model Employee
+﻿@model EmployeeViewModel
 
 @{
     var department =new SelectList(ViewData["department"] as IEnumerable<Department>,nameof(Department.Id),nameof(Department.Name));

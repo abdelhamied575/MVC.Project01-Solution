@@ -8,6 +8,9 @@
 
 let element = document.getElementById("Search");
 
+let table = document.getElementById("indexbody");
+
+
 element.addEventListener("Keyup", () => {
 
     // Send Request To The BackEnd
@@ -21,12 +24,18 @@ element.addEventListener("Keyup", () => {
         let url = `https://localhost:44317/Employees/Index?InputSearch=${element.value}`;
         xhr.open("Post", url, true);
 
+        IDBOpenDBRequest
+
         // function execute after request is successful 
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(this.responseText);
 
-                // Render Html Code To Response 
+                // Render Html Code To Response
+
+
+
+
 
             }
         }

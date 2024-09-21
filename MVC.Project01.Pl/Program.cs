@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using MVC.Project01.BLL.Interfaces;
 using MVC.Project01.BLL.Repositories;
 using MVC.Project01.DAL.Data.Contexts;
+using MVC.Project01.Pl.Mapping.Departments;
 using MVC.Project01.Pl.Mapping.Employees;
 
 namespace MVC.Project01.Pl
@@ -26,6 +27,7 @@ namespace MVC.Project01.Pl
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>(); // Allow DI For DepartmentRepository
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>(); // Allow DI For EmployeeRepository
             builder.Services.AddAutoMapper(typeof(EmployeeProfile));
+            builder.Services.AddAutoMapper(typeof(DepartmentProfile));
 
             // Allow The Indepancancy InJections
             //builder.Services.AddScoped();

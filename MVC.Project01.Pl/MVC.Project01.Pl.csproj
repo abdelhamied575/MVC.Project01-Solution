@@ -26,9 +26,4 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mapping\Departments\" />
-    <Folder Include="ViewModels\Departments\" />
-  </ItemGroup>
-
 </Project>

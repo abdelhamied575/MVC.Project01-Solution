@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MVC.Project01.BLL.Interfaces;
 using MVC.Project01.BLL.Repositories;
 using MVC.Project01.DAL.Models;
+using MVC.Project01.Pl.ViewModels.Departments;
+using System.Collections.Generic;
 
 namespace MVC.Project01.Pl.Controllers
 {
@@ -9,16 +12,21 @@ namespace MVC.Project01.Pl.Controllers
     {
 
         private readonly IDepartmentRepository _departmentRepository; // Null
+        private readonly IMapper _mapper;
 
-        public DepartmentController(IDepartmentRepository departmentRepository)
+        public DepartmentController(IDepartmentRepository departmentRepository,IMapper mapper)
         {
-            _departmentRepository=departmentRepository;    
+            _departmentRepository=departmentRepository;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
             var departments= _departmentRepository.GetAll();
-            return View(departments);
+
+            var Result=_mapper.Map<IEnumerable<DepartmentViewModel>>(departments);
+
+            return View(Result);
         }
 
         [HttpGet]
@@ -29,13 +37,14 @@ namespace MVC.Project01.Pl.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Department model)
+        public IActionResult Create(DepartmentViewModel model)
         {
 
             if (ModelState.IsValid)
             {
+                var department = _mapper.Map<Department>(model);
 
-                var Count = _departmentRepository.Add(model);
+                var Count = _departmentRepository.Add(department);
                 if (Count > 0)
                 {
                     return RedirectToAction("Index");
@@ -54,7 +63,10 @@ namespace MVC.Project01.Pl.Controllers
 
             if (department is null) return NotFound();
 
-            return View(ViewName,department);
+            var model=_mapper.Map<DepartmentViewModel>(department);
+
+
+            return View(ViewName, model);
         }
 
         [HttpGet]
@@ -75,7 +87,7 @@ namespace MVC.Project01.Pl.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Department model,[FromRoute]int ?id)
+        public IActionResult Edit(DepartmentViewModel model,[FromRoute]int ?id)
         {
             try
             {
@@ -84,8 +96,9 @@ namespace MVC.Project01.Pl.Controllers
 
                 if (ModelState.IsValid)
                 {
+                    var department=_mapper.Map<Department>(model);
 
-                    var Count = _departmentRepository.Update(model);
+                    var Count = _departmentRepository.Update(department);
                     if (Count > 0)
                     {
                         return RedirectToAction("Index");
@@ -120,7 +133,7 @@ namespace MVC.Project01.Pl.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete([FromRoute] int? id,Department model)
+        public IActionResult Delete([FromRoute] int? id,DepartmentViewModel model)
         {
 
             try
@@ -130,8 +143,8 @@ namespace MVC.Project01.Pl.Controllers
 
                 if (ModelState.IsValid)
                 {
-
-                    var Count = _departmentRepository.Delete(model);
+                    var department= _mapper.Map<Department>(model);
+                    var Count = _departmentRepository.Delete(department);
                     if (Count > 0)
                     {
                         return RedirectToAction("Index");
