@@ -17,7 +17,6 @@ namespace MVC.Project01.DAL.Models
 
         public DateTime DateOfCreation { get; set; }
 
-
         public ICollection<Employee> Employees { get; set; }
 
     }

@@ -13,41 +13,41 @@ namespace MVC.Project01.BLL.Repositories
             _context = context;
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             if (typeof(T) == typeof(Employee))
             {
-                return (IEnumerable<T>) _context.Employees.Include(E => E.WorkFor).ToList();
+                return (IEnumerable<T>) await _context.Employees.Include(E => E.WorkFor).ToListAsync();
             }
 
-            return _context.Set<T>().ToList();
+            return await _context.Set<T>().ToListAsync();
 
         }
 
-        public T Get(int Id)
+        public async Task<T> GetAsync(int Id)
         {
            
 
-            return _context.Set<T>().Find(Id);
+            return await _context.Set<T>().FindAsync(Id);
         }
 
 
-        public int Add(T entity)
+        public async Task<int> AddAsync(T entity)
         {
-            _context.Add(entity);
-            return _context.SaveChanges();
+            await _context.AddAsync(entity);
+            return await _context.SaveChangesAsync();
         }
 
-        public int Update(T entity)
+        public async Task<int> UpdateAsync(T entity)
         {
             _context.Update(entity);
-            return _context.SaveChanges();
+            return await _context.SaveChangesAsync();
         }
 
-        public int Delete(T entity)
+        public async Task<int> DeleteAsync(T entity)
         {
             _context.Remove(entity);
-            return _context.SaveChanges();
+            return await _context.SaveChangesAsync();
         }
 
        

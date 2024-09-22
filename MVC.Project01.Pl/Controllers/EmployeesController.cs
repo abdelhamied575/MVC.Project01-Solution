@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using MVC.Project01.BLL.Interfaces;
 using MVC.Project01.DAL.Models;
+using MVC.Project01.Pl.Helpers;
 using MVC.Project01.Pl.ViewModels.Employees;
+using System.Reflection.Metadata;
 
 namespace MVC.Project01.Pl.Controllers
 {
@@ -21,19 +23,19 @@ namespace MVC.Project01.Pl.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index(string InputSearch)
+        public async Task<IActionResult> Index(string InputSearch)
         {
             var employee = Enumerable.Empty<Employee>();
             //IEnumerable<Employee> employees;
 
             if (string.IsNullOrEmpty(InputSearch))
             {
-                 employee = _employeeRepository.GetAll();
+                 employee =await _employeeRepository.GetAllAsync();
 
             }
             else
             {
-                employee= _employeeRepository.GetByName(InputSearch);
+                employee=await _employeeRepository.GetByNameAsync(InputSearch);
             }
             var Result=_mapper.Map<IEnumerable<EmployeeViewModel>>(employee);
 
@@ -42,24 +44,32 @@ namespace MVC.Project01.Pl.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var department=_departmentRepository.GetAll();
+            var department=await _departmentRepository.GetAllAsync();
 
             ViewData["department"] = department;
 
             return View();
         }
 
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(EmployeeViewModel model)
+        public async Task<IActionResult> Create(EmployeeViewModel model)
         {
 
             if (ModelState.IsValid)
             {
                 try
                 {
+
+                    model.ImageName = DocumentSettings.UploadFile(model.Image, "Images");
+
+
                     //// Casting EmployeeViewModel(ViewModel) To Employee(Model)
                     //// Mapping
                     //// 1. Manual Mapping
@@ -80,9 +90,12 @@ namespace MVC.Project01.Pl.Controllers
 
 
                     // 2. Auto Mapping
+
+                    
+
                     var employee=_mapper.Map<Employee>(model);
 
-                    var Count = _employeeRepository.Add(employee);
+                    var Count =await _employeeRepository.AddAsync(employee);
                     if (Count > 0)
                     {
                         TempData["Message"] = "Employee Created!";
@@ -107,12 +120,16 @@ namespace MVC.Project01.Pl.Controllers
 
         }
 
+
+
+
+
         [HttpGet]
-        public IActionResult Details(int? id, string ViewName = "Details")
+        public async Task<IActionResult> Details(int? id, string ViewName = "Details")
         {
             if (id is null) return BadRequest();
 
-            var employee = _employeeRepository.Get(id.Value);
+            var employee =await  _employeeRepository.GetAsync(id.Value);
 
             if (employee is null) return NotFound();
 
@@ -139,8 +156,13 @@ namespace MVC.Project01.Pl.Controllers
             return View(ViewName, employeeViewModel);
         }
 
+
+
+
+
+
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             //if (id is null) return BadRequest();
 
@@ -150,20 +172,23 @@ namespace MVC.Project01.Pl.Controllers
 
             //return View(department);
 
-            var department = _departmentRepository.GetAll();
+            var department =await _departmentRepository.GetAllAsync();
 
             ViewData["department"] = department;
 
 
 
-            return Details(id, "Edit");
+            return await Details(id, "Edit");
 
 
         }
 
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Employee model, [FromRoute] int? id)
+        public async Task<IActionResult> Edit(EmployeeViewModel model, [FromRoute] int? id)
         {
             try
             {
@@ -173,9 +198,16 @@ namespace MVC.Project01.Pl.Controllers
 
                 if (ModelState.IsValid)
                 {
+
+                    if(model.ImageName is not null)
+                    {
+                        DocumentSettings.DeleteFile(model.ImageName, "Images");
+                    }
+                    model.ImageName  = DocumentSettings.UploadFile(model.Image,"Images");
+
                     var employee=_mapper.Map<Employee>(model);
 
-                    var Count = _employeeRepository.Update(employee);
+                    var Count =await _employeeRepository.UpdateAsync(employee);
                     if (Count > 0)
                     {
                         return RedirectToAction("Index");
@@ -195,8 +227,12 @@ namespace MVC.Project01.Pl.Controllers
         }
 
 
+
+
+
+
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             //if (id is null) return BadRequest();
 
@@ -206,13 +242,17 @@ namespace MVC.Project01.Pl.Controllers
 
             //return View(department);
 
-            return Details(id, "Delete");
+            return await Details(id, "Delete");
 
         }
 
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete([FromRoute] int? id, Employee model)
+        public async Task<IActionResult> Delete([FromRoute] int? id, Employee model)
         {
 
             try
@@ -223,9 +263,10 @@ namespace MVC.Project01.Pl.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    var Count = _employeeRepository.Delete(model);
+                    var Count =await _employeeRepository.DeleteAsync(model);
                     if (Count > 0)
                     {
+                        DocumentSettings.DeleteFile(model.ImageName, "Images");
                         return RedirectToAction("Index");
                     }
                 }

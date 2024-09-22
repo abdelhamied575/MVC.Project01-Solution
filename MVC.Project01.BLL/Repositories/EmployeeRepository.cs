@@ -18,13 +18,13 @@ namespace MVC.Project01.BLL.Repositories
         {
         }
 
-        public IEnumerable<Employee> GetByName(string name)
+        public async Task<IEnumerable<Employee>> GetByNameAsync(string name)
         {
-            return _context.Employees
+            return await _context.Employees
                            .Where(E=>E.Name.ToLower()
                            .Contains(name.ToLower()))
                            .Include(E => E.WorkFor)
-                           .ToList();
+                           .ToListAsync();
 
         }
 

@@ -20,9 +20,13 @@ namespace MVC.Project01.Pl.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+
+
+
+
+        public async Task<IActionResult> Index()
         {
-            var departments= _departmentRepository.GetAll();
+            var departments=await _departmentRepository.GetAllAsync();
 
             var Result=_mapper.Map<IEnumerable<DepartmentViewModel>>(departments);
 
@@ -37,14 +41,14 @@ namespace MVC.Project01.Pl.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(DepartmentViewModel model)
+        public async Task<IActionResult> Create(DepartmentViewModel model)
         {
 
             if (ModelState.IsValid)
             {
                 var department = _mapper.Map<Department>(model);
 
-                var Count = _departmentRepository.Add(department);
+                var Count =await _departmentRepository.AddAsync(department);
                 if (Count > 0)
                 {
                     return RedirectToAction("Index");
@@ -55,11 +59,11 @@ namespace MVC.Project01.Pl.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? id,string ViewName= "Details")
+        public async Task<IActionResult> Details(int? id,string ViewName= "Details")
         {
             if (id is null) return BadRequest();
 
-            var department=_departmentRepository.Get(id.Value);
+            var department=await _departmentRepository.GetAsync(id.Value);
 
             if (department is null) return NotFound();
 
@@ -70,7 +74,7 @@ namespace MVC.Project01.Pl.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             //if (id is null) return BadRequest();
 
@@ -80,14 +84,14 @@ namespace MVC.Project01.Pl.Controllers
 
             //return View(department);
 
-            return Details(id,"Edit");
+            return await Details(id,"Edit");
 
 
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(DepartmentViewModel model,[FromRoute]int ?id)
+        public async Task<IActionResult> Edit(DepartmentViewModel model,[FromRoute]int ?id)
         {
             try
             {
@@ -96,9 +100,9 @@ namespace MVC.Project01.Pl.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    var department=_mapper.Map<Department>(model);
+                    var department= _mapper.Map<Department>(model);
 
-                    var Count = _departmentRepository.Update(department);
+                    var Count = await _departmentRepository.UpdateAsync(department);
                     if (Count > 0)
                     {
                         return RedirectToAction("Index");
@@ -117,7 +121,7 @@ namespace MVC.Project01.Pl.Controllers
 
 
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             //if (id is null) return BadRequest();
 
@@ -127,13 +131,13 @@ namespace MVC.Project01.Pl.Controllers
 
             //return View(department);
 
-            return Details(id, "Delete");
+            return await Details(id, "Delete");
 
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete([FromRoute] int? id,DepartmentViewModel model)
+        public async Task<IActionResult> Delete([FromRoute] int? id,DepartmentViewModel model)
         {
 
             try
@@ -144,7 +148,7 @@ namespace MVC.Project01.Pl.Controllers
                 if (ModelState.IsValid)
                 {
                     var department= _mapper.Map<Department>(model);
-                    var Count = _departmentRepository.Delete(department);
+                    var Count =await _departmentRepository.DeleteAsync (department);
                     if (Count > 0)
                     {
                         return RedirectToAction("Index");

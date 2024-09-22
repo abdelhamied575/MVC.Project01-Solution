@@ -10,13 +10,13 @@ namespace MVC.Project01.BLL.Interfaces
     public interface IGenericRepository<T>
     {
 
-        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAllAsync();
 
-        T Get(int Id);
+        Task<T> GetAsync(int Id);
 
-        int Add(T entity);
-        int Update(T entity);
-        int Delete(T entity);
+        Task <int> AddAsync(T entity);
+        Task<int> UpdateAsync(T entity);
+        Task<int> DeleteAsync(T entity);
 
 
 

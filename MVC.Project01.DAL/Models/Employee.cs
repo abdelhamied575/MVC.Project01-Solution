@@ -26,6 +26,7 @@ namespace MVC.Project01.DAL.Models
         
        
         public string Email { get; set; }
+        public string? ImageName { get; set; }
 
         public string PhoneNumber { get; set; }
 

@@ -35,6 +35,9 @@ namespace MVC.Project01.Pl.ViewModels.Employees
 
         public DateTime HiringDate { get; set; }
 
+        public IFormFile? Image { get; set; }
+
+        public string? ImageName { get; set; }
 
 
         public int? WorkForId { get; set; }

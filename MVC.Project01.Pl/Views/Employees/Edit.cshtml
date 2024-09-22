@@ -8,11 +8,13 @@
 <br />
 <br />
 
-<form asp-action="Edit" method="post">
+<form asp-action="Edit"  enctype="multipart/form-data">
 
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <partial name="PartialViews/EditCreateEmployeePartialView" model="Model" />
+
+    <input asp-for="ImageName" hidden />
 
 
     <input type="submit" value="Save Changes" class="btn btn-primary" />
