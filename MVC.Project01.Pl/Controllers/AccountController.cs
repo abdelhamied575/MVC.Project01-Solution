@@ -291,8 +291,20 @@ namespace MVC.Project01.Pl.Controllers
 
 
 
-		#endregion
+        #endregion
 
 
-	}
+        #region AccessDenied
+
+		public IActionResult AccessDenied()
+		{
+			return View();
+		}
+
+
+        #endregion
+
+
+
+    }
 }

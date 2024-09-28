@@ -9,8 +9,9 @@ using MVC.Project01.Pl.ViewModels.Users;
 
 namespace MVC.Project01.Pl.Controllers
 {
-	[Authorize]
-	public class UserController : Controller
+    [Authorize(Roles = "Admin")]
+
+    public class UserController : Controller
 	{
 		private readonly UserManager<ApplicationUser> _userManager;
 

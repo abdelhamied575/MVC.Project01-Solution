@@ -39,6 +39,7 @@ namespace MVC.Project01.Pl
             builder.Services.ConfigureApplicationCookie(config =>
             {
                 config.LoginPath = "/Account/SignIn";
+                //config.AccessDeniedPath= "/Account/AccessDenied";
                 //config.Cookie.Expiration = TimeSpan.FromDays(1);
             });
 

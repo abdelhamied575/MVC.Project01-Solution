@@ -1,4 +1,4 @@
-﻿@model UserViewModel
+﻿@model RoleViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -14,7 +14,8 @@
 
     <partial name="RolesPartialViews/EditCreateRolePartialView" model="Model" />
 
-    @* <input asp-for="ImageName" hidden /> *@
+    <a asp-action="AddOrRemoveUsers" asp-route-roleId="@Model.Id" class="btn btn-success">Add Or Remove User</a>
+
 
 
     <input type="submit" value="Save Changes" class="btn btn-primary" />
