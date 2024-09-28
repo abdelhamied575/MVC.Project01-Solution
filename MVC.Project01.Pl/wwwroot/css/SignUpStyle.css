@@ -111,10 +111,10 @@ img {
 body {
     background: #76b852;
     /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #76b852, #8DC26F);
+    background: -webkit-linear-gradient(to top, #76b852, #8DF);
     background: -moz-linear-gradient(to top, #76b852, #8DC26F);
     background: -o-linear-gradient(to top, #76b852, #8DC26F);
-    background: linear-gradient(to top, #76b852, #8DC26F);
+    background: linear-gradient(to top, #76b2, #8DC26F);
     background-size: cover;
     background-attachment: fixed;
     font-family: 'Roboto', sans-serif;
@@ -353,6 +353,19 @@ input.checkbox {
             .colorlibcopy-agile p a:hover {
                 color: #000;
             }
+
+.padding{
+
+    padding-left:190px;
+    color:darkblue;
+    text-decoration:underline;
+    cursor:pointer;
+
+}
+
+.padding:hover{
+    color:midnightblue;
+}
 
 /*-- //copyright --*/
 .wrapper {

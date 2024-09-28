@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC.Project01.DAL.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240922175752_AddIdentityTable")]
-    partial class AddIdentityTable
+    [Migration("20240925182347_AddIdentity")]
+    partial class AddIdentity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,9 @@ namespace MVC.Project01.DAL.Data.Migrations
                     b.Property<string>("FristName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAgree")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()

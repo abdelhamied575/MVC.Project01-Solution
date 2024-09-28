@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Project01.BLL.Interfaces;
 using MVC.Project01.BLL.Repositories;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 
 namespace MVC.Project01.Pl.Controllers
 {
+    [Authorize]
     public class DepartmentController : Controller
     {
 

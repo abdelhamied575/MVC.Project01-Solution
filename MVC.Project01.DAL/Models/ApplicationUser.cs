@@ -12,10 +12,9 @@ namespace MVC.Project01.DAL.Models
 
         public string FristName { get; set; }
         public string LastName { get; set; }
-
-        public bool IsAgree { get; set; }
-
+		public bool IsAgree { get; set; }
 
 
-    }
+
+	}
 }

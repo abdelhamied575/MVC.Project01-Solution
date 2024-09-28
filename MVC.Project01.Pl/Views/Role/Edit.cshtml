@@ -1,0 +1,33 @@
+﻿@model UserViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Role</h1>
+<br />
+<br />
+
+<form asp-action="Edit">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <partial name="RolesPartialViews/EditCreateRolePartialView" model="Model" />
+
+    @* <input asp-for="ImageName" hidden /> *@
+
+
+    <input type="submit" value="Save Changes" class="btn btn-primary" />
+    <a asp-action="Index" class="btn btn-light">Back To List</a>
+
+
+
+</form>
+
+@section Validation {
+
+    <partial name="_ValidationScriptsPartial" />
+
+
+}
+

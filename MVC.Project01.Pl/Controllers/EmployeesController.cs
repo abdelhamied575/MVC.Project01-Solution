@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Project01.BLL.Interfaces;
 using MVC.Project01.DAL.Models;
@@ -8,6 +9,7 @@ using System.Reflection.Metadata;
 
 namespace MVC.Project01.Pl.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller
     {
 
@@ -67,7 +69,7 @@ namespace MVC.Project01.Pl.Controllers
                 try
                 {
 
-                    model.ImageName = DocumentSettings.UploadFile(model.Image, "Images");
+                    
 
 
                     //// Casting EmployeeViewModel(ViewModel) To Employee(Model)

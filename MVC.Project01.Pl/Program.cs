@@ -33,7 +33,14 @@ namespace MVC.Project01.Pl
             builder.Services.AddAutoMapper(typeof(DepartmentProfile));
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                            .AddEntityFrameworkStores<AppDbContext>(); 
+                            .AddEntityFrameworkStores<AppDbContext>()
+                            .AddDefaultTokenProviders();
+
+            builder.Services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = "/Account/SignIn";
+                //config.Cookie.Expiration = TimeSpan.FromDays(1);
+            });
 
             // Allow The Indepancancy InJections
             //builder.Services.AddScoped();
@@ -55,6 +62,7 @@ namespace MVC.Project01.Pl
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

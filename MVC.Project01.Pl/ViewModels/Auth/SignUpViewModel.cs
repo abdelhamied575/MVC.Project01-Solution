@@ -41,5 +41,5 @@ namespace MVC.Project01.Pl.ViewModels.Auth
 		[Required(ErrorMessage = " Required !!")]
 		public bool IsAgree { get; set; }
 
-    }
+	}
 }
