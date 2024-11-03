@@ -1,6 +1,8 @@
-﻿
-@model Employee
+﻿@model EmployeeViewModel
 
+@{
+    var department =new SelectList(ViewData["department"] as IEnumerable<Department>,nameof(Department.Id),nameof(Department.Name));
+}
 
 
 <div class="form-group">
@@ -87,4 +89,30 @@
 </div>
 
 <br />
+
+
+<div class="form-group">
+    <label asp-for="WorkFor" class="col-form-lable"> </label>
+    
+    <select asp-for="WorkForId" asp-items="department" class="form-select">
+
+        <option value="@null"> -- Select Department -- </option>
+
+    </select>
+
+    <span asp-validation-for="HiringDate" class="text-danger"></span>
+
+</div>
+
+<br />
+
+
+<div class="form-group">
+    <label asp-for="Image" class="col-form-lable"></label>
+    <input type="file" asp-for="Image" class="form-control" />
+
+</div>
+
+<br />
+
 

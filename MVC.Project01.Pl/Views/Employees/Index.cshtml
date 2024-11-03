@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Employee>
+﻿    @model IEnumerable<EmployeeViewModel>
 
 
 @{
@@ -9,6 +9,36 @@
 <br />
 <br />
 
+<form asp-action="Index" class="m-3">
+
+    <div class="row">
+
+        <div class="col-8">
+            <input type="search" id="Search" name="InputSearch" class="form-control" />
+
+        </div>
+
+        <div class="col-4">
+            <input type="submit" value="Search" class="btn btn-success ">
+
+
+        </div>
+
+    </div>
+
+    
+
+</form>
+
+
+@if(!string.IsNullOrEmpty(TempData["Message"] as string))
+{
+    <div class="alert alert-danger">
+        <p>@TempData["Message"]</p>
+    </div>
+}
+
+
 <a asp-controller="Employees" asp-action="Create" class="btn btn-primary">Create Employee</a>
 <br />
 <br />
@@ -18,8 +48,10 @@
 
         <thead>
             <tr>
+                <th>@Html.DisplayNameFor(D => D.Image)</th>
                 <th>@Html.DisplayNameFor(D => D.Name)</th>
                 <th>@Html.DisplayNameFor(D => D.Age)</th>
+                <th>@Html.DisplayNameFor(D => D.WorkFor)</th>
                 <th>@Html.DisplayNameFor(D => D.Address)</th>
                 <th>@Html.DisplayNameFor(D => D.Email)</th>
                 <th>@Html.DisplayNameFor(D => D.Salary)</th>
@@ -38,15 +70,17 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody id="indexbody">
 
             @foreach (var employee in Model)
             {
 
                 <tr>
 
+                    <td> <img src="~/Files/Images/@employee.ImageName" width="75" class="img-fluid rounded-circle" /> </td>
                     <td> @employee.Name </td>
                     <td> @employee.Age </td>
+                    <td> @employee.WorkFor?.Name </td>
                     <td> @employee.Address </td>
                     <td> @Html.DisplayFor(M=>employee.Email) </td>
                     <td> @Html.DisplayFor(M => employee.Salary)  </td>
@@ -54,7 +88,7 @@
                     <td> @Html.DisplayFor(M => employee.IsActive) </td>
                     <td> @employee.HiringDate </td>
 
-                    <Partial name="_ButtonPartialView" model="@employee.Id"/>
+                    <Partial name="_ButtonPartialView" model="@employee.Id.ToString()"/>
 
                   
 

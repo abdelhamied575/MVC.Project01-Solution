@@ -11,14 +11,13 @@ namespace MVC.Project01.DAL.Models
     public class Department : BaseEntity
     {
         
-        [Required(ErrorMessage ="Code Is Required")]
         public string Code { get; set; }
         
-        [Required(ErrorMessage ="Name Is Required")]
         public string Name { get; set; }
 
-        [DisplayName("Date Of Creation")]
         public DateTime DateOfCreation { get; set; }
+
+        public ICollection<Employee> Employees { get; set; }
 
     }
 }

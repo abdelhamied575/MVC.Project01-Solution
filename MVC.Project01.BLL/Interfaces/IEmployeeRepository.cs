@@ -9,6 +9,7 @@ namespace MVC.Project01.BLL.Interfaces
 {
     public interface IEmployeeRepository:IGenericRepository<Employee>
     {
+         Task<IEnumerable<Employee>> GetByNameAsync(string name);
 
         //IEnumerable<Employee> GetAll();
 

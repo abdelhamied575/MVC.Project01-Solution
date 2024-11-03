@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Department>
+﻿@model IEnumerable<DepartmentViewModel>
 
 
 @{
@@ -56,7 +56,7 @@
                         @item.DateOfCreation
                     </td>
                    
-                    <Partial name="_ButtonPartialView" model="@item.Id"/>
+                    <Partial name="_ButtonPartialView" model="@item.Id.ToString()"/>
 
 
                 </tr>
